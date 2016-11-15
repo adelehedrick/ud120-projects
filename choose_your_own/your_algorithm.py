@@ -30,9 +30,20 @@ plt.show()
 
 ### your code here!  name your classifier object clf if you want the 
 ### visualization code (prettyPicture) to show you the decision boundary
+from sklearn.ensemble import RandomForestClassifier
+from time import time
 
+clf = RandomForestClassifier(n_estimators=8, criterion="entropy", max_features=None)
 
+t0 = time()
+clf = clf.fit(features_train, labels_train)
+print("training time: "+str(round(time()-t0, 3)))
 
+t0 = time()
+acc = clf.score(features_test, labels_test)
+print("testing time: "+str(round(time()-t0, 3)))
+
+print("accuracy: "+str(acc.mean()))
 
 
 
