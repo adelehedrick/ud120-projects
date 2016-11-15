@@ -36,6 +36,32 @@ print("quantified sal count: "+str(quant_sal_count))
 email_address = len( [x for x in enron_data.values() if x["email_address"] != 'NaN' ] )
 print("known email addresses: "+str(email_address))
 
-#print(enron_data["SKILLING JEFFREY K"]["total_payments"])
+total_payments_nan = len( [x for x in enron_data.values() if x["total_payments"] == 'NaN' ] )
+print("total payment = nan count: "+str(total_payments_nan))
+
+tpn_percent = float(total_payments_nan)/float(people_count)
+print("percent: "+str(tpn_percent))
+
+total_payments_nan_poi = len( [x for x in enron_data.values() if x["total_payments"] == 'NaN' and x["poi"] == True ] )
+print("total payment = nan count for poi: "+str(total_payments_nan_poi))
+
+poi_count = len( [x for x in enron_data.values() if x["poi"] == True ] )
+print("poi count: "+str(poi_count))
+
+tpn_poi_percent = float(total_payments_nan_poi)/float(poi_count)
+print("total_payments_nan_poi/poi_count: "+str(tpn_poi_percent))
+
+print(enron_data["SKILLING JEFFREY K"])
 #print(enron_data["FASTOW ANDREW S"]["total_payments"])
 #print(enron_data["LAY KENNETH L"]["total_payments"])
+ 
+
+
+import sys
+sys.path.append("../tools/")
+from feature_format import featureFormat, targetFeatureSplit
+
+#using some tools given to convert the dict to np array
+feature_list = ["poi", "salary", "bonus"] 
+data_array = featureFormat( enron_data, feature_list )
+label, features = targetFeatureSplit(data_array)
